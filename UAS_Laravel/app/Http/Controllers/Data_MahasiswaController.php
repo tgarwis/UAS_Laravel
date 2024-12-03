@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Data_Mahasiswa;
+use App\Exports\Data_MahasiswasExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class Data_MahasiswaController extends Controller
 {
@@ -83,4 +86,9 @@ class Data_MahasiswaController extends Controller
         }
         return redirect()->route('mahasiswa-index')->with('error', 'Data Mahasiswa tidak ditemukan!');
     }
+
+    public function exportExcel(){
+        return Excel::download(new Data_MahasiswasExport, 'data_mahasiswa.xlsx');
+    }
+
 }
