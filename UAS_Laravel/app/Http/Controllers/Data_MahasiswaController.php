@@ -10,9 +10,11 @@ class Data_MahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $mahasiswa = Data_Mahasiswa::paginate(2);
+        // $mahasiswa = Data_Mahasiswa::all();
+        return view("mahasiswa.index-mahasiswa", compact('mahasiswa'));
     }
 
     /**
@@ -74,6 +76,11 @@ class Data_MahasiswaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $mahasiswa = Data_Mahasiswa::find($id);
+        if ($mahasiswa){
+            $mahasiswa->delete();
+            return redirect()->route('mahasiswa-index')->with('success', 'Data Mahasiswa deleted successfully!');
+        }
+        return redirect()->route('mahasiswa-index')->with('error', 'Data Mahasiswa tidak ditemukan!');
     }
 }
